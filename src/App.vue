@@ -1,7 +1,42 @@
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+const status = ref(false);
+
+function toggleChange() {
+  status.value = !status.value;
+}
+</script>
 
 <template>
-  <h1>سلام چطوری</h1>
-  <p>سلاممم</p>
-  <p>0912039432984923</p>
+  <header>
+    <img alt="achareh logo" src="./assets/images/achare-logo.svg" />
+    <nav class="header-navigation">
+      <ul>
+        <li>ثبت آدرس</li>
+        <li>مشاهده آدرس</li>
+      </ul>
+    </nav>
+  </header>
+  
 </template>
+
+<style scoped>
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: white;
+}
+
+.header-navigation ul {
+  display: flex;
+  gap: 5px;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+main {
+  background-color: #f5f5f5;
+  height: 100vh;
+}
+</style>
