@@ -37,3 +37,7 @@ body {
 ul {
   list-style-type: none;
 }
+input ,button {
+  font-family: inherit;
+  
+}
