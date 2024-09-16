@@ -5,52 +5,66 @@
     <h2 class="container_title">ثبت آدرس</h2>
     <div class="contianer_form">
       <h3>لطفا مشخصات خود را وارد کنید</h3>
-      <div class="container_from-group">
-        <label for="name" class="">نام </label>
-        <input type="text" id="name" placeholder="مثال: محمد" required />
-      </div>
-      <div class="container_from-group">
-        <label for="family-name" class="">نام خانوادگی</label>
-        <input
-          type="text"
-          id="family-name"
-          placeholder="مثال: رضایی"
-          required
-        />
-      </div>
-      <div class="container_from-group">
-        <label for="phone-number" class="">شماره تلفن همراه </label>
-        <input
-          type="number"
-          id="family-name"
-          placeholder="مثال: ۰۹۱۲۱۲۳۴۵۶۸۷ "
-          required
-        />
-      </div>
-      <div class="container_from-group">
-        <label for="phone-number" class="">شماره تماس ثابت (اختیاری) </label>
-        <input
-          type="number"
-          id="family-name"
-          placeholder="مثال: ۰۹۱۲۱۲۳۴۵۶۸۷ "
-          required
-        />
-      </div>
-      <div class="container_from-group">
-        <label for="phone-number" class="">آدرس</label>
-        <input type="text" id="family-name" required />
-      </div>
+      <div class="container_form-items">
+        <div class="container_from-group">
+          <label for="name">نام </label>
+          <input type="text" id="name" placeholder="مثال: محمد" required />
+        </div>
+        <div class="container_from-group">
+          <label for="family-name">نام خانوادگی</label>
+          <input
+            type="text"
+            id="family-name"
+            placeholder="مثال: رضایی"
+            required
+          />
+        </div>
+        <div class="container_from-group">
+          <label for="phone-number">شماره تلفن همراه </label>
+          <input
+            type="number"
+            id="phone-number"
+            placeholder="مثال: ۰۹۱۲۱۲۳۴۵۶۸۷ "
+            required
+          />
+        </div>
+        <div class="container_from-group">
+          <label class="telephone-number-label">
+            <span
+              >شماره تلفن ثابت
+              <span class="telephone-number-label-small">(اختیاری)</span></span
+            >
+            <span class="prefix">* با پیش شماره</span>
+          </label>
 
+          <input
+            type="number"
+            id="telephone-number"
+            placeholder="مثال: ۰۲۱۳۳۴۴۵۶۷ "
+            required
+          />
+        </div>
+        <div class="container_from-group full-width">
+          <label for="adress">آدرس</label>
+          <input type="text" id="adress" required />
+        </div>
+      </div>
       <div class="container_from-group-option">
         <label>جنسیت</label>
         <div class="container_from-group-option-radio">
           <div class="container_from-group-option-radio_female">
-            <input type="radio" id="female" name="gender" required />
-            <label for="female">خانم</label>
+            <label class="custom-radio-container">
+              <input type="radio" name="gender" value="female" required />
+              <span class="custom-radio"></span>
+              <span class="custom-radio-label">خانم</span>
+            </label>
           </div>
           <div class="container_from-group-option-radio_male">
-            <input type="radio" id="male" name="gender" required />
-            <label for="male">آقا</label>
+            <label class="custom-radio-container">
+              <input type="radio" name="gender" value="male" required />
+              <span class="custom-radio"></span>
+              <span class="custom-radio-label">آقا</span>
+            </label>
           </div>
         </div>
       </div>
@@ -63,7 +77,7 @@
 
 <style>
 .container {
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   min-height: 100vh;
   padding: 5px 16px;
 }
@@ -154,15 +168,94 @@ input:focus {
   padding: 16px;
   margin-top: 50rem;
 }
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+.telephone-number-badge {
+  font-size: 11px;
 }
 
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
+.container_from-group .telephone-number {
+  background-color: red;
+}
+
+.telephone-number-label {
+  display: flex;
+  justify-content: space-between;
+}
+.telephone-number-label-small {
+  font-size: 11px;
+}
+.prefix {
+  color: #757575;
+}
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 1024px) {
+}
+
+@media (min-width: 1280px) {
+  .container {
+    background-color: #f0f0f0;
+  }
+  .container_title {
+  }
+  .contianer_form {
+    width: 800px;
+    margin: 0 auto;
+    max-width: 100%;
+    background-color: #f7f7f7;
+    padding: 22px 48px 20px 48px;
+  }
+  .container_from-group.full-width {
+    grid-column: span 2;
+  }
+
+  .container_form-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+  }
+
+  input {
+    background-color: #f7f7f7;
+    color: #37474f;
+    font-weight: 700;
+  }
+  input::placeholder {
+    color: #b6b6b6;
+    font-size: 14px;
+  }
+  .container_title {
+    font-size: 16px;
+    width: 800px;
+    margin: 0 auto;
+    line-height: 32px;
+    padding-bottom: 7px;
+  }
+  .contianer_form h3 {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .container_from-group label {
+    font-size: 15px;
+  }
+  .container_from-group-option label:first-child,
+  .container_from-group-option label {
+    font-size: 15px;
+  }
+
+  .container_from-group-option-radio {
+    display: flex;
+    gap: 20px;
+  }
+
+  .container_from-group-option-radio_female,
+  .container_from-group-option-radio_male {
+    display: flex;
+    align-items: center;
+  }
+  .prefix {
+    font-size: 11px;
+  }
 }
 </style>

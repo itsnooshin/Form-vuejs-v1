@@ -5,7 +5,11 @@ import { RouterLink } from "vue-router";
 <template>
   <header>
     <a href="/">
-      <img alt="achareh logo" src="../assets/images/achare-logo.svg" />
+      <img
+        alt="achareh logo"
+        class="logo"
+        src="../assets/images/achare-logo.svg"
+      />
     </a>
     <nav class="header_navigation">
       <ul>
@@ -22,7 +26,8 @@ import { RouterLink } from "vue-router";
             to="/view"
             active-class="is-active"
             class="header_navigation-view"
-            > مشاهده آدرس ها</RouterLink
+          >
+            مشاهده آدرس ها</RouterLink
           >
         </li>
       </ul>
@@ -39,7 +44,6 @@ header {
 }
 .header_navigation ul {
   display: flex;
-
   gap: 21px;
   font-weight: 700;
   font-size: 12px;
@@ -50,7 +54,10 @@ a {
   color: #333;
   font-weight: bold;
 }
-
+.logo {
+  width: 45px;
+  height: 25px;
+}
 main {
   background-color: #f5f5f5;
   height: 100vh;
@@ -68,5 +75,33 @@ main {
 
 .is-active {
   color: #37474f;
+}
+
+@media (min-width: 768px) {
+  header {
+    padding: 15px 30px;
+  }
+}
+
+@media (min-width: 1024px) {
+  header {
+    padding: 20px 40px;
+  }
+}
+
+@media (min-width: 1280px) {
+  header {
+    padding: 25px 48px;
+  }
+  .header_navigation-view {
+    font-size: 14px;
+  }
+  .header_navigation-register {
+    font-size: 14px;
+  }
+  .logo {
+    width: 70px;
+    height: 39px;
+  }
 }
 </style>

@@ -37,7 +37,65 @@ body {
 ul {
   list-style-type: none;
 }
-input ,button {
+input,
+button {
   font-family: inherit;
-  
+}
+
+.custom-radio-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.custom-radio-container input[type="radio"] {
+  display: none;
+}
+
+.custom-radio {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #00bfa5;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  margin-left: 10px;
+  transition: all 0.3s ease;
+}
+
+.custom-radio::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: #00bfa5;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.2s ease;
+}
+
+.custom-radio-container input[type="radio"]:checked + .custom-radio::after {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.custom-radio-container:hover .custom-radio {
+  border-color: #00796b;
+}
+
+.custom-radio-label {
+  cursor: pointer;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
