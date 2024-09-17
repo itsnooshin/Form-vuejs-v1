@@ -92,7 +92,7 @@ main {
 @media (min-width: 1280px) {
   header {
     padding: 15px 48px;
-    background-color: #F7F7F7;
+    background-color: #f7f7f7;
   }
   .header_navigation-view {
     font-size: 14px;

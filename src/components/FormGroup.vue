@@ -1,73 +1,208 @@
+<script setup>
+import { reactive, ref, watch } from "vue";
+import ChooseLocation from "../components/ChooseLocation.vue";
+const formData = reactive({
+  firstName: "",
+  lastName: "",
+  phoneNumber: "",
+  phoneNumberOptional: "",
+  address: "",
+  gender: "",
+});
+
+const error = reactive({
+  firstName: "",
+  lastName: "",
+  phoneNumber: "",
+  phoneNumberOptional: "",
+  address: "",
+  gender: "",
+});
+
+const isValid = ref(false);
+
+const validatePhoneNumberInput = (event) => {
+  const input = event.target.value;
+  formData.phoneNumber = input.replace(/\D/g, "");
+};
+
+const validatePhoneNumberInputOptional = (event) => {
+  const input = event.target.value;
+  formData.phoneNumberOptional = input.replace(/\D/g, "");
+};
+
+const submitForm = async () => {
+  let formIsValid = true;
+
+  // Reset errors
+  Object.keys(error).forEach((key) => (error[key] = ""));
+
+  // Validate fields
+  if (!formData.firstName) {
+    error.firstName = "پرکردن این فیلد الزامی است";
+    formIsValid = false;
+  } else if (formData.firstName.length < 3) {
+    error.firstName = "نام باید حداقل دارای 3 کاراکتر باشد";
+    formIsValid = false;
+  }
+
+  if (!formData.lastName) {
+    error.lastName = "پر کردن این  فیلد الزامی است";
+    formIsValid = false;
+  } else if (formData.lastName.length < 3) {
+    error.lastName = "نام خانوادگی حداقل باید دارای 3 کاراکتر باشد";
+    formIsValid = false;
+  }
+
+  if (!formData.phoneNumber) {
+    error.phoneNumber = "پر کردن این الزامی است";
+    formIsValid = false;
+  } else if (!/^[0-9]{11}$/.test(formData.phoneNumber)) {
+    error.phoneNumber = "شماره وارد شده صحیح نمی باشد";
+    formIsValid = false;
+  }
+
+  if (!formData.address) {
+    error.address = "پر کردن این الزامی است";
+    formIsValid = false;
+  } else if (formData.address.length < 3) {
+    error.address = "ادرس حداقل باید دارای 3 کاراکتر باشد";
+    formIsValid = false;
+  }
+
+  if (formIsValid) {
+    isValid.value = true;
+  }
+};
+</script>
+
 <template>
-  <div class="container_form-title">
-    <h2 class="">ثبت آدرس</h2>
+  <div v-if="!isValid">
+    <form @submit.prevent="submitForm" novalidate>
+      <div class="container_form-title">
+        <h2 class="">ثبت آدرس</h2>
+        <div class="contianer_form">
+          <h3>لطفا مشخصات خود را وارد کنید</h3>
+          <div class="container_form-items">
+            <div class="container_from-group">
+              <label for="name">نام</label>
+              <input
+                v-model="formData.firstName"
+                type="text"
+                id="name"
+                placeholder="مثال: محمد"
+                required
+                :class="{ 'input-error': error.firstName }"
+              />
+              <span v-if="error.firstName" class="error-message">{{
+                error.firstName
+              }}</span>
+            </div>
+            <div class="container_from-group">
+              <label for="family-name">نام خانوادگی</label>
+              <input
+                v-model="formData.lastName"
+                type="text"
+                id="family-name"
+                placeholder="مثال: رضایی"
+                required
+                :class="{ 'input-error': error.lastName }"
+              />
+              <span v-if="error.lastName" class="error-message">{{
+                error.lastName
+              }}</span>
+            </div>
+            <div class="container_from-group">
+              <label for="phone-number">شماره تلفن همراه </label>
+              <input
+                v-model="formData.phoneNumber"
+                type="text"
+                id="phone-number"
+                placeholder="مثال: ۰۹۱۲۱۲۳۴۵۶۸۷ "
+                required
+                @input="validatePhoneNumberInput"
+                :class="{ 'input-error': error.phoneNumber }"
+              />
+              <span v-if="error.phoneNumber" class="error-message">{{
+                error.phoneNumber
+              }}</span>
+            </div>
+            <div class="container_from-group">
+              <label class="telephone-number-label">
+                <span
+                  >شماره تلفن ثابت
+                  <span class="telephone-number-label-small"
+                    >(اختیاری)</span
+                  ></span
+                >
+                <span class="prefix">* با پیش شماره</span>
+              </label>
 
-    <div class="contianer_form">
-      <h3>لطفا مشخصات خود را وارد کنید</h3>
-      <div class="container_form-items">
-        <div class="container_from-group">
-          <label for="name">نام </label>
-          <input type="text" id="name" placeholder="مثال: محمد" required />
-        </div>
-        <div class="container_from-group">
-          <label for="family-name">نام خانوادگی</label>
-          <input
-            type="text"
-            id="family-name"
-            placeholder="مثال: رضایی"
-            required
-          />
-        </div>
-        <div class="container_from-group">
-          <label for="phone-number">شماره تلفن همراه </label>
-          <input
-            type="number"
-            id="phone-number"
-            placeholder="مثال: ۰۹۱۲۱۲۳۴۵۶۸۷ "
-            required
-          />
-        </div>
-        <div class="container_from-group">
-          <label class="telephone-number-label">
-            <span
-              >شماره تلفن ثابت
-              <span class="telephone-number-label-small">(اختیاری)</span></span
-            >
-            <span class="prefix">* با پیش شماره</span>
-          </label>
-
-          <input
-            type="number"
-            id="telephone-number"
-            placeholder="مثال: ۰۲۱۳۳۴۴۵۶۷ "
-            required
-          />
-        </div>
-        <div class="container_from-group full-width">
-          <label for="adress">آدرس</label>
-          <input type="text" id="adress" required />
+              <input
+                type="text"
+                id="telephone-number"
+                placeholder="مثال: ۰۲۱۳۳۴۴۵۶۷ "
+                v-model="formData.phoneNumberOptional"
+                required
+                @input="validatePhoneNumberInputOPtional"
+              />
+            </div>
+            <div class="container_from-group full-width">
+              <label for="adress">آدرس</label>
+              <input
+                type="text"
+                id="adress"
+                required
+                v-model="formData.address"
+                :class="{ 'input-error': error.address }"
+              />
+              <span v-if="error.address" class="error-message">{{
+                error.address
+              }}</span>
+            </div>
+          </div>
+          <div class="container_from-group-option">
+            <label>جنسیت</label>
+            <div class="container_from-group-option-radio">
+              <div class="container_from-group-option-radio_female">
+                <label class="custom-radio-container">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="خانم"
+                    required
+                    v-model="formData.gender"
+                  />
+                  <span class="custom-radio"></span>
+                  <span class="custom-radio-label">خانم</span>
+                </label>
+              </div>
+              <div class="container_from-group-option-radio_male">
+                <label class="custom-radio-container">
+                  <input
+                    type="radio"
+                    name="gender"
+                    v-model="formData.gender"
+                    value="آقا"
+                    required
+                  />
+                  <span class="custom-radio"></span>
+                  <span class="custom-radio-label">آقا</span>
+                </label>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="container_from-group-option">
-        <label>جنسیت</label>
-        <div class="container_from-group-option-radio">
-          <div class="container_from-group-option-radio_female">
-            <label class="custom-radio-container">
-              <input type="radio" name="gender" value="female" required />
-              <span class="custom-radio"></span>
-              <span class="custom-radio-label">خانم</span>
-            </label>
-          </div>
-          <div class="container_from-group-option-radio_male">
-            <label class="custom-radio-container">
-              <input type="radio" name="gender" value="male" required />
-              <span class="custom-radio"></span>
-              <span class="custom-radio-label">آقا</span>
-            </label>
-          </div>
-        </div>
+
+      <div class="container_btn-bottom">
+        <button type="submit" class="container_btn">ثبت و ادامه</button>
       </div>
-    </div>
+    </form>
+  </div>
+
+  <div v-else>
+    <ChooseLocation />
   </div>
 </template>
 
@@ -162,6 +297,16 @@ input:focus {
 .container_from-group-option-radio_male {
   display: flex;
   align-items: center;
+}
+
+.error-message {
+  color: #e61236;
+  font-size: 12px;
+  line-height: 32px;
+}
+
+.input-error {
+  border-color: #e61236 !important;
 }
 
 @media (min-width: 768px) {

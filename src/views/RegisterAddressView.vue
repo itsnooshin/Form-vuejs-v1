@@ -3,13 +3,10 @@ import FormGroupVue from "../components/FormGroup.vue";
 </script>
 
 <template>
-  <div class="container">
+  <div class="">
     <div class="conatiner_main">
       <FormGroupVue />
     </div>
-  </div>
-  <div class="container_btn-bottom">
-    <button type="submit" class="container_btn">ثبت و ادامه</button>
   </div>
 </template>
 
@@ -22,26 +19,6 @@ import FormGroupVue from "../components/FormGroup.vue";
 .container_title {
   padding-top: 16px;
   color: #37474f;
-}
-
-.container_btn {
-  border: none;
-  width: 100%;
-  background-color: #00bfa5;
-  color: #fff;
-  font-weight: 700;
-  font-size: 16px;
-  border-radius: 4px;
-  padding: 12px 0px;
-  cursor: pointer;
-}
-.container_btn-bottom {
-  position: fixed;
-  background-color: white;
-  bottom: 0;
-  width: 100%;
-  padding: 16px;
-  margin-top: 50rem;
 }
 
 @media (min-width: 768px) {
@@ -63,10 +40,6 @@ import FormGroupVue from "../components/FormGroup.vue";
 }
 
 @media (min-width: 1024px) {
-  .container_btn-bottom {
-    padding: 20px;
-  }
-
   .container_title {
     font-size: 15px;
     margin: 0 auto;
@@ -79,18 +52,6 @@ import FormGroupVue from "../components/FormGroup.vue";
   .container_main {
     width: 800px;
     margin: 0 auto;
-  }
-
-  .container_btn-bottom {
-    background-color: #f7f7f7;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 12px 0px;
-  }
-  .container_btn {
-    width: 20%;
-    padding: 12px 0px;
   }
 }
 </style>
