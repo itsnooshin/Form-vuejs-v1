@@ -20,7 +20,7 @@
       <SuccessLoctionVue />
     </div>
   </div>
-  <div class="map-bottom">
+  <div class="map-bottom" v-if="!isSubmited">
     <button type="submit" class="map_btn" @click="handleMapSubmit">
       <LoadingSpinnerVue v-if="isLoading" />
       <span v-else>تایید و ادامه</span>
@@ -37,6 +37,8 @@ import SuccessLoctionVue from "./SuccessLoction.vue";
 
 const isLoading = ref(false);
 const isSubmited = ref(false);
+const lat = ref(null);
+const lng = ref(null);
 let map, marker;
 
 const handleMapSubmit = () => {
@@ -45,7 +47,7 @@ const handleMapSubmit = () => {
   setTimeout(() => {
     isLoading.value = false;
     isSubmited.value = true;
-  }, 6000);
+  }, 1000);
 };
 
 onMounted(() => {
@@ -61,6 +63,14 @@ onMounted(() => {
   map.on("click", function (e) {
     const { lat, lng } = e.latlng;
     marker.setLatLng([lat, lng]);
+    marker
+      .bindPopup(
+        `<p style="font-size: 14px; font-family: vazir;">
+      طول جغرافیایی: ${lat}<br>
+      عرض جغرافیایی: ${lng}
+    </p>`
+      )
+      .openPopup();
   });
 });
 </script>
@@ -111,6 +121,7 @@ onMounted(() => {
   padding: 16px 0px;
   cursor: pointer;
 }
+
 .map-bottom {
   position: fixed;
   background-color: #f7f7f7;
@@ -172,8 +183,6 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 50px;
-    padding: 18px;
   }
 }
 </style>

@@ -1,26 +1,3 @@
-@font-face {
-  font-family: "vazir";
-  src: url("../assets/fonts/Vazirmatn-FD-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "vazir";
-  src: url("../assets/fonts/Vazirmatn-FD-Medium.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "vazir";
-  src: url("../assets/fonts/Vazirmatn-FD-Bold.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
 * {
   margin: 0;
   padding: 0;
@@ -98,13 +75,6 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-/* mobile */
-
-.container_from-group {
-}
-.contianer_form {
-  background-color: blue;
-}
 .container {
   background-color: #f5f5f5;
   min-height: 100vh;
@@ -135,7 +105,6 @@ input[type="number"] {
   padding: 16px;
   margin-top: 50rem;
 }
-
 
 @media (min-width: 768px) {
   .container_main {
@@ -179,10 +148,19 @@ input[type="number"] {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* padding: 12px 0px; */
   }
   .container_btn {
     width: 20%;
-    /* padding: 12px 0px; */
   }
+}
+
+.error-message-body {
+  border: 1px solid #e61236;
+  background-color: #f8d7da;
+  color: #94003e;
+  text-align: center;
+  max-width: 400px;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 9px;
 }

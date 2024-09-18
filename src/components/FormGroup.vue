@@ -1,6 +1,7 @@
 <script setup>
-import { reactive, ref, watch } from "vue";
+import { reactive, ref } from "vue";
 import ChooseLocation from "../components/ChooseLocation.vue";
+
 const formData = reactive({
   firstName: "",
   lastName: "",
@@ -20,6 +21,9 @@ const error = reactive({
 });
 
 const isValid = ref(false);
+const lat = ref(35.719);
+const lng = ref(51.32);
+const ErrorMessage = ref("");
 
 const validatePhoneNumberInput = (event) => {
   const input = event.target.value;
@@ -31,11 +35,18 @@ const validatePhoneNumberInputOptional = (event) => {
   formData.phoneNumberOptional = input.replace(/\D/g, "");
 };
 
+let formIsValid = true;
 const submitForm = async () => {
-  let formIsValid = true;
+  // let formIsValid = true;
 
-  // Reset errors
-  Object.keys(error).forEach((key) => (error[key] = ""));
+  console.log(formData);
+
+  formIsValid = true;
+
+  // Reset the error messages first
+  Object.keys(error).forEach((key) => {
+    error[key] = "";
+  });
 
   // Validate fields
   if (!formData.firstName) {
@@ -66,20 +77,67 @@ const submitForm = async () => {
     error.address = "پر کردن این الزامی است";
     formIsValid = false;
   } else if (formData.address.length < 3) {
-    error.address = "ادرس حداقل باید دارای 3 کاراکتر باشد";
+    error.address = "آدرس حداقل باید دارای 3 کاراکتر باشد";
     formIsValid = false;
   }
 
+  // Prevent submission if form is invalid
+  if (!formIsValid) {
+    return;
+  }
   if (formIsValid) {
-    isValid.value = true;
+    // isValid.value = true;
+    const form = {
+      first_name: formData.firstName, //
+      last_name: formData.lastName, //
+      coordinate_mobile: formData.phoneNumber,
+      coordinate_phone_number: formData.phoneNumberOptional,
+      address: formData.address,
+      region: `1`,
+      lat: lat.value,
+      lng: lng.value,
+      gender: formData.gender,
+    };
+
+    console.log(formData, form, JSON.stringify(formData));
+
+    try {
+      const response = await fetch(
+        "https://stage.achareh.ir/api/karfarmas/address",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Basic MDk4MjIyMjIyMjI6U2FuYTEyMzQ1Njc4",
+          },
+          body: JSON.stringify(form),
+        }
+      );
+
+      if (response.ok) {
+        isValid.value = true;
+      } else {
+        const errorData = await response.json();
+        console.log(errorData.gender?.[0]);
+
+        ErrorMessage.value =
+          "در ارسال فرم مشکلی پیش امده، لطفا دوباره تلاش کنید!";
+        console.log(error);
+      }
+    } catch (error) {
+      ErrorMessage.value = error.message;
+    }
   }
 };
 </script>
 
 <template>
-  <div v-if="!isValid">
+  <div v-if="!isValid" class="conatiner_form-ut">
     <form @submit.prevent="submitForm" novalidate>
       <div class="container_form-title">
+        <h2 v-if="ErrorMessage" class="error-message-body">
+          {{ ErrorMessage }}
+        </h2>
         <h2 class="">ثبت آدرس</h2>
         <div class="contianer_form">
           <h3>لطفا مشخصات خود را وارد کنید</h3>
@@ -144,7 +202,7 @@ const submitForm = async () => {
                 placeholder="مثال: ۰۲۱۳۳۴۴۵۶۷ "
                 v-model="formData.phoneNumberOptional"
                 required
-                @input="validatePhoneNumberInputOPtional"
+                @input="validatePhoneNumberInputOptional"
               />
             </div>
             <div class="container_from-group full-width">
@@ -169,7 +227,7 @@ const submitForm = async () => {
                   <input
                     type="radio"
                     name="gender"
-                    value="خانم"
+                    value="female"
                     required
                     v-model="formData.gender"
                   />
@@ -183,7 +241,7 @@ const submitForm = async () => {
                     type="radio"
                     name="gender"
                     v-model="formData.gender"
-                    value="آقا"
+                    value="male"
                     required
                   />
                   <span class="custom-radio"></span>
@@ -206,17 +264,25 @@ const submitForm = async () => {
   </div>
 </template>
 
-<!-- style -->
-
 <style>
+.container_form-heading {
+  font-size: 16px;
+}
 .contianer_form {
-  background-color: #fff;
+  background-color: white;
+
+  padding: 26px 16px;
   margin-top: 10px;
   border-radius: 9px;
   padding: 15px 16px 16px 16px;
   color: #37474f;
   padding-bottom: 20px;
   margin-bottom: 12rem;
+}
+
+.container_form-title {
+  background-color: #f5f5f5;
+  padding: 20px 16px;
 }
 .container_from-group {
   display: flex;
@@ -321,7 +387,6 @@ input:focus {
   .contianer_form {
     margin: 0 auto;
     max-width: 100%;
-    background-color: #f7f7f7;
     margin-bottom: 120px;
     padding: 20px 38px 20px 38px;
   }
@@ -355,11 +420,19 @@ input:focus {
   .prefix {
     font-size: 11px;
   }
+  .container_form-title {
+    background-color: white;
+  }
+  .container_form-title h2 {
+    width: 800px;
+    margin: 0 auto;
+  }
 }
 
 @media (min-width: 1280px) {
   .container_form-title {
-    width: 800px;
+    background-color: #f0f0f0;
+    min-height: 100vh;
     margin: 0 auto;
     color: #37474f;
   }

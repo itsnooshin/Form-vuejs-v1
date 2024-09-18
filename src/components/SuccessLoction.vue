@@ -3,10 +3,16 @@
     <div class="success_container-message">
       <img alt="sucess icon" src="../assets/images/done-icon.svg" />
       <h2>اطلاعات شما با موفقیت ثبت شد</h2>
-      <button class="success_conatiner-button">مشاهده اطلاعات</button>
+      <RouterLink to="/view" class="button_link">
+        <button class="success_conatiner-button">مشاهده اطلاعات</button>
+      </RouterLink>
     </div>
   </div>
 </template>
+
+<script setup>
+import { RouterLink } from "vue-router";
+</script>
 
 <style scoped>
 .success_conatiner {
@@ -14,9 +20,13 @@
   flex-direction: column;
   background-color: #f5f5f5;
 }
+.button_link {
+  
+  width: 90%;
+}
 .success_conatiner-button {
   border: none;
-  width: 90%;
+  width: 100%;
   border: 1px solid #00bfa5;
   color: #fff;
   font-weight: 700;
@@ -46,6 +56,5 @@
     width: 400px;
     margin: 0 auto;
   }
- 
 }
 </style>
