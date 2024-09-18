@@ -65,20 +65,6 @@ This will launch the app on `http://localhost:5173`.
 - Responsive design ensures that the form works well on both mobile and desktop screens.
 - Specific styles were added to highlight errors and improve form input usability.
 
----
-
-```javascript
-const handleSubmit = async () => {
-  try {
-    const response = await fetchData();
-    if (!response.ok) {
-      throw new Error("Server error. Please try again.");
-    }
-  } catch (error) {
-    setErrorMessage("An error occurred during submission.");
-  }
-};
-```
 
 ## How to Use
 
