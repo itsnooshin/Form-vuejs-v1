@@ -1,6 +1,5 @@
 # README
 
-## Overview
 
 This task focuses on improving the user experience by adding error handling, a loading spinner during data fetch, and enhancing CSS styling in a project using **Vite**.
 
